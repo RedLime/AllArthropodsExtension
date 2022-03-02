@@ -11,39 +11,33 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
+    public PlayerEntityMixin(World world) {
+        super(world);
     }
 
     @Override
-    public void onKilledOther(LivingEntity other) {
-        super.onKilledOther(other);
+    public void method_6098(LivingEntity other) {
+        super.method_6098(other);
 
         InGameTimer timer = InGameTimer.getInstance();
 
         if (timer.getCategory() != AllArthropods.ALL_ARTHROPODS_CATEGORY || !timer.isPlaying()) return;
 
-        if (other.getType() == EntityType.SPIDER) {
+        if (EntityType.getIdByEntity(other) == 52) {
             timer.updateMoreData(0, 1);
         }
-        if (other.getType() == EntityType.CAVE_SPIDER) {
+        if (EntityType.getIdByEntity(other) == 59) {
             timer.updateMoreData(1, 1);
         }
-        if (other.getType() == EntityType.SILVERFISH) {
+        if (EntityType.getIdByEntity(other) == 60) {
             timer.updateMoreData(2, 1);
-        }
-        if (other.getType() == EntityType.ENDERMITE) {
-            timer.updateMoreData(3, 1);
-        }
-        if (other.getType() == EntityType.BEE) {
-            timer.updateMoreData(4, 1);
         }
 
         int result = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             if (timer.getMoreData(i) != 0) result++;
         }
-        if (result == 5) {
+        if (result == 3) {
             InGameTimer.complete();
         }
     }
