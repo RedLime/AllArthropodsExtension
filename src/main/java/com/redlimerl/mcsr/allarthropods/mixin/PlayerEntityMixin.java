@@ -35,15 +35,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (other.getType() == EntityType.ENDERMITE) {
             timer.updateMoreData(3, 1);
         }
-        if (other.getType() == EntityType.BEE) {
-            timer.updateMoreData(4, 1);
-        }
 
         int result = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             if (timer.getMoreData(i) != 0) result++;
         }
-        if (result == 5) {
+        if (result == 4) {
             InGameTimer.complete();
         }
     }
